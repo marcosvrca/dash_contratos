@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notas Fiscais 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f5f6f8; --surface:#ffffff; --surface-2:#eef0f4; --line:#dfe3ea; --grid:#e8ebf0;
+  --ink:#141821; --ink-2:#4d5566; --ink-3:#7d8596;
+  --accent:#1f5fbf; --warn-bg:#fff4e0; --warn-ink:#8a5200; --warn-line:#f0c979;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#111318; --surface:#1a1d24; --surface-2:#22262f; --line:#2e333e; --grid:#262a33;
+    --ink:#f2f4f8; --ink-2:#b4bac6; --ink-3:#848b99;
+    --accent:#6ea2ef; --warn-bg:#2d2412; --warn-ink:#f2c46d; --warn-line:#5c4718;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#111318; --surface:#1a1d24; --surface-2:#22262f; --line:#2e333e; --grid:#262a33;
+  --ink:#f2f4f8; --ink-2:#b4bac6; --ink-3:#848b99;
+  --accent:#6ea2ef; --warn-bg:#2d2412; --warn-ink:#f2c46d; --warn-line:#5c4718;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+[hidden]{display:none!important}
+svg rect,svg path{-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 48px;display:grid;gap:20px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{margin:4px 0 0;font-size:28px;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+h2{margin:0;font-size:15px;font-weight:600}
+.sub{color:var(--ink-2);font-size:13px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.kpi .lbl{font-size:12px;color:var(--ink-2);font-weight:500}
+.kpi .val{word-break:break-word;font-family:var(--mono);font-size:22px;font-weight:500;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.kpi .foot{font-size:12px;color:var(--ink-3)}
+.bar{height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.note{display:flex;gap:10px;align-items:flex-start;background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:10px;padding:12px 14px;font-size:13px}
+.note b{font-weight:700}
+.grid2{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:12px;min-width:0}
+.phead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+.sw.hatch{background:repeating-linear-gradient(135deg,var(--ink-3) 0 2px,transparent 2px 5px);border:1px solid var(--ink-3)}
+svg{display:block;width:100%;max-width:100%;height:auto;overflow:visible}
+svg text{fill:var(--ink-3);font-family:var(--sans);font-size:11px}
+svg .tick{font-family:var(--mono)}
+.tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12px;-webkit-box-shadow:0 6px 20px rgba(0,0,0,.15);box-shadow:0 6px 20px rgba(0,0,0,.15);min-width:180px;z-index:10}
+.tip .r{display:flex;justify-content:space-between;gap:14px}
+.tip .t{font-weight:600;margin-bottom:4px}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
+th,td{padding:10px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--surface)}
+th:first-child,td:first-child{text-align:left;position:-webkit-sticky;position:sticky;left:0;background:var(--surface)}
+td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td:first-child{font-family:var(--sans);font-weight:600}
+td.zero{color:var(--ink-3)}
+td.fut{color:var(--ink-2)}
+td.tot,th.tot{background:var(--surface-2)}
+tr.sum td{font-weight:600;border-bottom:none;border-top:2px solid var(--ink-3)}
+.grp th{border-bottom:none;padding-bottom:0;text-transform:none;letter-spacing:0;font-size:12px}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px}
+.pill.ok{background:var(--surface-2);color:var(--ink-2)}
+.pill.fx{background:var(--warn-bg);color:var(--warn-ink);border:1px solid var(--warn-line)}
+.orgdot{display:inline-flex;align-items:center;gap:8px}
+@media (max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media (max-width:440px){.kpis{grid-template-columns:1fr}h1{font-size:23px}}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  html,body{background:#fff!important}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{width:100%}
+  .wrap{max-width:none;padding-inline:0;padding-block:0;gap:12px}
+  .tbl{overflow:visible}
+  table{min-width:0;font-size:10.5px}
+  th,td{padding:6px 5px}
+  .panel,.kpi{break-inside:avoid;page-break-inside:avoid}
+  .tip{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Exercício 2026 · Maio a Dezembro</div>
+      <h1>Notas Fiscais por Órgão</h1>
+      <div class="sub">Emitidas de maio a agosto · previstas de setembro a dezembro</div>
+    </div>
+    <div class="legend" aria-hidden="true"><span><i class="sw" style="background:var(--ink-3)"></i>Emitido</span><span><i class="sw hatch"></i>A emitir</span></div>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+
+  <div class="grid2">
+    <section class="panel">
+      <div class="phead"><h2>Faturamento mensal por órgão</h2><div class="legend" id="leg1"></div></div>
+      <svg id="c1" width="680" height="320" preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 320" role="img" aria-label="Barras empilhadas de faturamento mensal por órgão, maio a dezembro"></svg>
+    </section>
+    <section class="panel">
+      <div class="phead"><h2>Total do ano por órgão</h2></div>
+      <svg id="c2" width="420" height="320" preserveAspectRatio="xMidYMid meet" viewBox="0 0 420 320" role="img" aria-label="Barras horizontais do total anual por órgão, divididas em emitido e a emitir"></svg>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="phead"><h2>Detalhamento</h2><span class="sub">Valores em R$</span></div>
+    <div class="tbl"><table id="tbl"></table></div>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const M=["Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"], NE=4;
+const D=[
+ {o:"ATI",c:"--s1",v:[301150,366970,443450,443450,443450,443450,443450,443450]},
+ {o:"SEFAZ",c:"--s2",v:[0,577600,577600,577600,577600,577600,577600,577600]},
+ {o:"NATURATINS",c:"--s3",v:[0,0,303000,303000,303000,303000,303000,303000]},
+ {o:"CASA MIL",c:"--s4",v:[0,0,27625,33150,33150,33150,33150,33150],fix:1},
+ {o:"SEDUC",c:"--s5",v:[0,0,0,0,244800,244800,244800,244800]}
+];
+const brl=n=>"R$ "+n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const short=n=>n===0?"0":n>=1e6?(n/1e6).toLocaleString("pt-BR",{maximumFractionDigits:1})+" mi":Math.round(n/1e3)+" mil";
+const sum=a=>a.reduce((x,y)=>x+y,0);
+D.forEach(d=>{d.em=sum(d.v.slice(0,NE));d.ae=sum(d.v.slice(NE));d.tot=d.em+d.ae});
+const EM=sum(D.map(d=>d.em)),AE=sum(D.map(d=>d.ae)),TOT=EM+AE;
+const mt=M.map((_,i)=>sum(D.map(d=>d.v[i])));
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,p){var e=document.createElementNS(NS,t),st=a.style||"";
+  for(var k in a){if(k==="style")continue;var v=String(a[k]);
+    if((k==="fill"||k==="stroke")&&(v.indexOf("var(")===0||v.indexOf("url(")===0)){st+=";"+k+":"+v;e.setAttribute(k,v.indexOf("url(")===0?v:"#888");}
+    else e.setAttribute(k,v);}
+  if(st)e.setAttribute("style",st.replace(/^;/,""));if(p)p.appendChild(e);return e;}
+
+// KPIs
+const pct=EM/TOT*100;
+document.getElementById("kpis").innerHTML=`
+<div class="kpi"><div class="lbl">Total emitido</div><div class="val">${brl(EM)}</div><div class="foot">Maio a agosto · 4 meses</div></div>
+<div class="kpi"><div class="lbl">A emitir</div><div class="val">${brl(AE)}</div><div class="foot">Setembro a dezembro · ${brl(mt[4])}/mês</div></div>
+<div class="kpi"><div class="lbl">Total do ano</div><div class="val">${brl(TOT)}</div><div class="foot">5 órgãos</div></div>
+<div class="kpi"><div class="lbl">Executado no ano</div><div class="val">${pct.toLocaleString("pt-BR",{maximumFractionDigits:1})}%</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+
+document.getElementById("leg1").innerHTML=D.map(d=>`<span><i class="sw" style="background:var(${d.c})"></i>${d.o}</span>`).join("");
+
+// hatch pattern defs
+function defs(svg){const df=el("defs",{},svg);D.forEach((d,i)=>{const p=el("pattern",{id:"h"+svg.id+i,width:6,height:6,patternUnits:"userSpaceOnUse",patternTransform:"rotate(45)"},df);el("rect",{width:6,height:6,fill:`var(${d.c})`,"fill-opacity":.35},p);el("rect",{width:2.2,height:6,fill:`var(${d.c})`},p)})}
+
+const tip=document.getElementById("tip");
+function showTip(e,html){tip.innerHTML=html;tip.hidden=false;const w=tip.offsetWidth,h=tip.offsetHeight;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-14;tip.style.left=x+"px";tip.style.top=y+"px"}
+const hide=()=>{tip.hidden=true};
+function fire(h,e){h.__f(e)}
+document.addEventListener("click",hide);window.addEventListener("scroll",hide,{passive:true});
+
+// Chart 1: stacked monthly
+(function(){
+ const s=document.getElementById("c1");defs(s);
+ const L=58,R=10,T=26,B=36,W=680-L-R,H=320-T-B,max=1800000;
+ const y=v=>T+H-v/max*H;
+ for(let t=0;t<=max;t+=300000){el("line",{x1:L,x2:L+W,y1:y(t),y2:y(t),stroke:"var(--grid)","stroke-width":1},s);el("text",{x:L-8,y:y(t)+4,"text-anchor":"end",class:"tick"},s).textContent=short(t)}
+ const bw=W/M.length,w=Math.min(46,bw*.58);
+ // divider
+ const dx=L+bw*NE;
+ el("line",{x1:dx,x2:dx,y1:T-12,y2:T+H,stroke:"var(--ink-3)","stroke-dasharray":"3 3"},s);
+ el("text",{x:dx-8,y:T-4,"text-anchor":"end"},s).textContent="Emitido";
+ el("text",{x:dx+8,y:T-4},s).textContent="A emitir";
+ M.forEach((m,i)=>{
+  const cx=L+bw*i+bw/2;let acc=0;const fut=i>=NE;
+  const segs=D.filter(d=>d.v[i]>0);
+  segs.forEach((d,k)=>{const v=d.v[i],y0=y(acc),y1=y(acc+v);acc+=v;const top=k===segs.length-1;
+   const h=Math.max(0,y0-y1-(k?2:0));
+   const fill=fut?`url(#hc1${D.indexOf(d)})`:`var(${d.c})`;
+   if(top){const r=Math.min(4,h);el("path",{d:`M${cx-w/2},${y1+h} V${y1+r} q0,-${r} ${r},-${r} H${cx+w/2-r} q${r},0 ${r},${r} V${y1+h} Z`,fill},s)}
+   else el("rect",{x:cx-w/2,y:y1,width:w,height:h,fill},s);
+  });
+  el("text",{x:cx,y:y(mt[i])-6,"text-anchor":"middle",class:"tick",style:"fill:var(--ink-2)"},s).textContent=short(mt[i]);
+  el("text",{x:cx,y:T+H+18,"text-anchor":"middle",style:fut?"":"fill:var(--ink-2);font-weight:600"},s).textContent=m;
+  const hit=el("rect",{x:L+bw*i,y:T,width:bw,height:H,fill:"transparent"},s);
+  hit.addEventListener("click",e=>{e.stopPropagation();fire(hit,e)});hit.__f=e=>showTip(e,`<div class="t">${m}/2026 · ${fut?"a emitir":"emitido"}</div>`+D.map(d=>`<div class="r"><span class="orgdot"><i class="sw" style="background:var(${d.c})"></i>${d.o}</span><span class="num">${brl(d.v[i])}</span></div>`).join("")+`<div class="r" style="border-top:1px solid var(--line);margin-top:4px;padding-top:4px;font-weight:600"><span>Total</span><span class="num">${brl(mt[i])}</span></div>`);
+  hit.addEventListener("mousemove",e=>fire(hit,e));hit.addEventListener("mouseleave",hide);
+ });
+ el("line",{x1:L,x2:L+W,y1:T+H,y2:T+H,stroke:"var(--ink-3)"},s);
+})();
+
+// Chart 2: horizontal totals
+(function(){
+ const s=document.getElementById("c2");defs(s);
+ const L=86,R=12,T=10,B=30,W=420-L-R,H=320-T-B,max=4500000;
+ const x=v=>L+v/max*W;
+ for(let t=0;t<=max;t+=1500000){el("line",{x1:x(t),x2:x(t),y1:T,y2:T+H,stroke:"var(--grid)"},s);el("text",{x:x(t),y:T+H+18,"text-anchor":"middle",class:"tick"},s).textContent=short(t)}
+ const rows=[...D].sort((a,b)=>b.tot-a.tot),rh=H/rows.length,bh=Math.min(26,rh*.5);
+ rows.forEach((d,i)=>{
+  const cy=T+rh*i+rh/2,idx=D.indexOf(d);
+  el("text",{x:L-10,y:cy+4,"text-anchor":"end",style:"fill:var(--ink-2);font-weight:600"},s).textContent=d.o;
+  if(d.em>0)el("rect",{x:L,y:cy-bh/2,width:Math.max(0,x(d.em)-L-(d.ae?1:0)),height:bh,fill:`var(${d.c})`},s);
+  const x0=d.em>0?x(d.em)+1:L,x1=x(d.tot),r=Math.min(4,bh/2);
+  el("path",{d:`M${x0},${cy-bh/2} H${x1-r} q${r},0 ${r},${r} V${cy+bh/2-r} q0,${r} -${r},${r} H${x0} Z`,fill:`url(#hc2${idx})`},s);
+  el("text",{x:L,y:cy+bh/2+13,class:"tick"},s).textContent=brl(d.tot);
+  const hit=el("rect",{x:0,y:T+rh*i,width:420,height:rh,fill:"transparent"},s);
+  hit.addEventListener("click",e=>{e.stopPropagation();fire(hit,e)});hit.__f=e=>showTip(e,`<div class="t">${d.o}</div><div class="r"><span>Emitido</span><span class="num">${brl(d.em)}</span></div><div class="r"><span>A emitir</span><span class="num">${brl(d.ae)}</span></div><div class="r" style="border-top:1px solid var(--line);margin-top:4px;padding-top:4px;font-weight:600"><span>Total</span><span class="num">${brl(d.tot)}</span></div>`);
+  hit.addEventListener("mousemove",e=>fire(hit,e));hit.addEventListener("mouseleave",hide);
+ });
+})();
+
+// Table
+(function(){
+ const cell=(v,fut)=>`<td class="${v===0?"zero":fut?"fut":""}">${v===0?"—":brl(v).replace("R$ ","")}</td>`;
+ let h=`<thead><tr class="grp"><th></th><th colspan="5" style="text-align:left;color:var(--ink-2)">Emitido</th><th colspan="5" style="text-align:left;color:var(--ink-2)">A emitir</th><th></th></tr>
+ <tr><th>Órgão</th>${M.slice(0,4).map(m=>`<th>${m}</th>`).join("")}<th class="tot">Total emitido</th>${M.slice(4).map(m=>`<th>${m}</th>`).join("")}<th class="tot">Total a emitir</th><th class="tot">Total ano</th></tr></thead><tbody>`;
+ D.forEach(d=>{h+=`<tr><td><span class="orgdot"><i class="sw" style="background:var(${d.c})"></i>${d.o}</span></td>${d.v.slice(0,4).map(v=>cell(v)).join("")}<td class="tot">${brl(d.em).replace("R$ ","")}</td>${d.v.slice(4).map(v=>cell(v,1)).join("")}<td class="tot">${brl(d.ae).replace("R$ ","")}</td><td class="tot">${brl(d.tot).replace("R$ ","")}</td></tr>`});
+ h+=`<tr class="sum"><td>Total</td>${mt.slice(0,4).map(v=>`<td>${brl(v).replace("R$ ","")}</td>`).join("")}<td class="tot">${brl(EM).replace("R$ ","")}</td>${mt.slice(4).map(v=>`<td>${brl(v).replace("R$ ","")}</td>`).join("")}<td class="tot">${brl(AE).replace("R$ ","")}</td><td class="tot">${brl(TOT).replace("R$ ","")}</td></tr></tbody>`;
+ document.getElementById("tbl").innerHTML=h;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "orgao": "ATI",
+  "host": "127.0.0.1",
+  "porta": 8765,
+  "dadosIlustrativos": true,
+  "raizArquivos": "dados",
+  "regras": {
+    "janelaRenovacaoDias": 120,
+    "limiteExecucao": 0.85
+  },
+  "andares": {
+    "primeiro_andar": ["contratos", "notas_fiscais"],
+    "segundo_andar": ["ordens_de_servico", "empenhos"]
+  },
+  "modulos": [
+    {"id": "contratos", "nome": "Contratos", "ativo": true},
+    {"id": "notas_fiscais", "nome": "Notas fiscais", "ativo": false},
+    {"id": "ordens_de_servico", "nome": "Ordens de serviço", "ativo": false},
+    {"id": "empenhos", "nome": "Empenhos", "ativo": false}
+  ]
+}

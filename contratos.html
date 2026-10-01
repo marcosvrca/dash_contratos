@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contratos ATI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f5f6f8; --surface:#ffffff; --surface-2:#eef0f4; --line:#dfe3ea; --grid:#e8ebf0;
+  --ink:#141821; --ink-2:#4d5566; --ink-3:#7d8596;
+  --accent:#1f5fbf; --warn-bg:#fff4e0; --warn-ink:#8a5200; --warn-line:#f0c979;
+  --bad-bg:#fdecea; --bad-ink:#9b2c2c; --bad-line:#f0b4b4;
+  --ok-bg:#e8f6ef; --ok-ink:#0f6b45; --ok-line:#b7e0cb;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#7b61c9;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#111318; --surface:#1a1d24; --surface-2:#22262f; --line:#2e333e; --grid:#262a33;
+    --ink:#f2f4f8; --ink-2:#b4bac6; --ink-3:#848b99;
+    --accent:#6ea2ef; --warn-bg:#2d2412; --warn-ink:#f2c46d; --warn-line:#5c4718;
+    --bad-bg:#2c1818; --bad-ink:#f0a0a0; --bad-line:#6a3030;
+    --ok-bg:#14261c; --ok-ink:#8ed4b0; --ok-line:#245c40;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#a48be0;
+  }
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 64px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.mods{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.mods a,.mods span{font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);text-decoration:none}
+.mods a[aria-current="page"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.mods .soon{opacity:.55}
+h1{margin:4px 0 0;font-size:28px;font-weight:700;letter-spacing:-.02em}
+h2{margin:0;font-size:15px;font-weight:600}
+.sub{color:var(--ink-2);font-size:13px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px;text-align:left}
+.kpi .lbl{font-size:12px;color:var(--ink-2);font-weight:500}
+.kpi .val{font-family:var(--mono);font-size:20px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .foot{font-size:12px;color:var(--ink-3)}
+.kpi.alert{border-color:var(--warn-line);background:var(--warn-bg);color:var(--warn-ink)}
+.kpi.alert .lbl,.kpi.alert .foot{color:var(--warn-ink)}
+.note{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:10px;padding:12px 14px;font-size:13px}
+.note b{font-weight:700}
+.alerts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.alert{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:left;cursor:pointer;width:100%}
+.alert:hover{border-color:var(--accent)}
+.alert .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.alert.warn{border-color:var(--warn-line);background:var(--warn-bg);color:var(--warn-ink)}
+.alert.bad{border-color:var(--bad-line);background:var(--bad-bg);color:var(--bad-ink)}
+.alert .go{font-size:12px;font-weight:600;white-space:nowrap}
+.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:12px;min-width:0}
+.phead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{fill:var(--ink-3);font-family:var(--sans);font-size:11px}
+svg .tick{font-family:var(--mono)}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters input,.filters select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+.filters input{flex:1;min-width:180px}
+.filters select{min-width:160px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:980px}
+th,td{padding:10px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--surface);cursor:pointer;position:sticky;top:0}
+th:first-child,td:first-child,th.l,td.l{text-align:left}
+td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td.l{font-family:var(--sans)}
+tr.data{cursor:pointer}
+tr.data:hover td{background:var(--surface-2)}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;font-family:var(--sans)}
+.pill.vigente{background:var(--ok-bg);color:var(--ok-ink)}
+.pill.a-vencer{background:var(--warn-bg);color:var(--warn-ink)}
+.pill.vencido{background:var(--bad-bg);color:var(--bad-ink)}
+.orgdot{display:inline-flex;align-items:center;gap:8px}
+.empty{color:var(--ink-3);padding:18px 0}
+dialog{border:none;padding:0;background:transparent;max-width:520px;width:calc(100% - 32px)}
+dialog::backdrop{background:rgba(20,24,33,.45)}
+.sheet{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px 18px 8px;display:grid;gap:14px;max-height:min(86vh,760px);overflow:auto}
+.sheet header{align-items:flex-start}
+.x{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;cursor:pointer}
+.blocks{display:grid;gap:12px}
+.block{display:grid;gap:6px}
+.block h3{margin:0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:4px 10px;font-size:13px}
+.kv span{color:var(--ink-2)}
+.kv b{font-weight:600}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.alerts{grid-template-columns:1fr}}
+@media (max-width:440px){.kpis{grid-template-columns:1fr}h1{font-size:23px}.kv{grid-template-columns:1fr}}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  .note,.filters,dialog{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .panel,.kpi{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">ATI · Gestão de contratos</div>
+      <h1>Contratos</h1>
+      <div class="sub" id="fonte">Carregando a base de contratos</div>
+    </div>
+    <nav class="mods" id="mods" aria-label="Módulos"></nav>
+  </header>
+
+  <div class="note" id="aviso" hidden></div>
+
+  <section class="kpis" id="kpis"></section>
+  <section>
+    <h2 style="margin:0 0 8px">Alertas da carteira</h2>
+    <div class="alerts" id="alerts"></div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel">
+      <div class="phead">
+        <h2>Total por setor</h2>
+        <div class="legend"><span><i class="sw" style="background:var(--accent)"></i>Pago</span><span><i class="sw" style="background:var(--surface-2);border:1px solid var(--line)"></i>Saldo</span></div>
+      </div>
+      <svg id="cset" role="img" aria-label="Valor pago e saldo por setor"></svg>
+    </section>
+    <section class="panel">
+      <div class="phead">
+        <h2>Vigência</h2>
+        <div class="legend"><span><i class="sw" style="background:var(--ok-ink)"></i>Vigente</span><span><i class="sw" style="background:var(--warn-ink)"></i>120 dias</span><span><i class="sw" style="background:var(--bad-ink)"></i>Vencido</span></div>
+      </div>
+      <svg id="cgan" role="img" aria-label="Linha do tempo de vigência dos contratos"></svg>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="phead">
+      <h2>Detalhamento</h2>
+      <span class="sub" id="count"></span>
+    </div>
+    <div class="filters">
+      <input id="q" type="search" placeholder="Buscar contrato, fornecedor, processo, gestor ou fiscal" aria-label="Buscar">
+      <select id="fset" aria-label="Setor"></select>
+      <select id="fsit" aria-label="Situação">
+        <option value="">Todas as situações</option>
+        <option value="vigente">Vigente</option>
+        <option value="a-vencer">A vencer em 120 dias</option>
+        <option value="vencido">Vencido</option>
+      </select>
+    </div>
+    <div class="tbl"><table id="tbl"></table></div>
+  </section>
+</div>
+
+<dialog id="dlg">
+  <div class="sheet">
+    <header>
+      <div>
+        <div class="eyebrow" id="dnum"></div>
+        <h2 id="dforn"></h2>
+        <div class="sub" id="dobj"></div>
+      </div>
+      <button class="x" id="dx" type="button">Fechar</button>
+    </header>
+    <div class="blocks" id="dbody"></div>
+  </div>
+</dialog>
+
+<script>
+let CONTRATOS = [];
+let JANELA = 120;
+let LIMITE = 0.85;
+
+const CORES = {
+  "Infraestrutura":"--s1",
+  "Sistemas":"--s2",
+  "Suporte":"--s3",
+  "Segurança da Informação":"--s4",
+  "Administrativo":"--s5"
+};
+const PALETA = ["--s1","--s2","--s3","--s4","--s5"];
+function cor(setor){
+  if (CORES[setor]) return CORES[setor];
+  let h = 0;
+  for (const ch of setor) h = (h + ch.charCodeAt(0)) % PALETA.length;
+  return PALETA[h];
+}
+const brl = n => "R$ " + n.toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2});
+const short = n => n >= 1e6 ? (n/1e6).toLocaleString("pt-BR",{maximumFractionDigits:1}) + " mi" : Math.round(n/1e3) + " mil";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const parseISO = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); };
+const fmt = d => d.toLocaleDateString("pt-BR");
+const today = (() => { const t = new Date(); t.setHours(0,0,0,0); return t; })();
+const dayMs = 86400000;
+
+function diasAte(fim){ return Math.ceil((parseISO(fim) - today) / dayMs); }
+function situacao(c){
+  const d = diasAte(c.fim);
+  if (d < 0) return "vencido";
+  if (d <= JANELA) return "a-vencer";
+  return "vigente";
+}
+function rotuloSit(c){
+  const s = situacao(c), d = diasAte(c.fim);
+  if (s === "vencido") return "Vencido há " + Math.abs(d) + " dias";
+  if (s === "a-vencer") return "Vence em " + d + " dias";
+  return "Vigente";
+}
+function proximoPagamento(c){
+  if (!c.diaPagamento || situacao(c) === "vencido") return null;
+  const fim = parseISO(c.fim);
+  let d = new Date(today.getFullYear(), today.getMonth(), c.diaPagamento);
+  if (d < today) d = new Date(today.getFullYear(), today.getMonth()+1, c.diaPagamento);
+  if (d > fim) return null;
+  return d;
+}
+function saldo(c){ return c.valor - c.pago; }
+
+let filtro = {q:"", setor:"", sit:""};
+let ordem = {key:"fim", dir:1};
+
+function lista(){
+  const q = filtro.q.trim().toLowerCase();
+  return CONTRATOS.filter(c => {
+    if (filtro.setor && c.setor !== filtro.setor) return false;
+    if (filtro.sit && situacao(c) !== filtro.sit) return false;
+    if (!q) return true;
+    const blob = [c.numero,c.fornecedor,c.objeto,c.processo,c.gestor,c.fiscal,c.setor,c.modalidade].join(" ").toLowerCase();
+    return blob.includes(q);
+  });
+}
+function ordenar(rows){
+  const k = ordem.key;
+  const val = c => {
+    if (k === "saldo") return saldo(c);
+    if (k === "pagamento") return proximoPagamento(c)?.getTime() ?? 0;
+    if (k === "inicio" || k === "fim") return parseISO(c[k]).getTime();
+    if (k === "situacao") return diasAte(c.fim);
+    return c[k];
+  };
+  return [...rows].sort((a,b) => {
+    const va = val(a), vb = val(b);
+    if (va < vb) return -ordem.dir;
+    if (va > vb) return ordem.dir;
+    return a.numero.localeCompare(b.numero);
+  });
+}
+
+function alertas(){
+  const items = [];
+  CONTRATOS.forEach(c => {
+    const s = situacao(c);
+    if (s === "vencido") items.push({cls:"bad", k:"Vencido", t:c.numero+" · "+c.fornecedor+" encerrou em "+fmt(parseISO(c.fim))+".", id:c.numero});
+    else if (s === "a-vencer") items.push({cls:"warn", k:JANELA+" dias", t:c.numero+" · "+c.fornecedor+" vence em "+diasAte(c.fim)+" dias"+(c.renovavel?" · renovável":"")+".", id:c.numero});
+    if (c.valor > 0 && c.pago / c.valor >= LIMITE && s !== "vencido") items.push({cls:"warn", k:"Saldo", t:c.numero+" · execução em "+Math.round(c.pago/c.valor*100)+"% do valor global.", id:c.numero});
+    if (!c.fiscal) items.push({cls:"bad", k:"Sem fiscal", t:c.numero+" · "+c.fornecedor+" está sem fiscal atribuído.", id:c.numero});
+    if (!c.diaPagamento) items.push({cls:"warn", k:"Sem pagamento", t:c.numero+" · dia de pagamento não informado.", id:c.numero});
+  });
+  return items;
+}
+
+function renderAlertas(){
+  const items = alertas();
+  document.getElementById("alerts").innerHTML = items.map(a =>
+    `<button class="alert ${a.cls}" type="button" data-id="${esc(a.id)}"><span><span class="k">${esc(a.k)}</span><div>${esc(a.t)}</div></span><span class="go">Abrir</span></button>`
+  ).join("");
+}
+
+function renderKpis(){
+  const rows = lista();
+  const valor = rows.reduce((s,c)=>s+c.valor,0);
+  const pago = rows.reduce((s,c)=>s+c.pago,0);
+  const ativos = rows.filter(c => situacao(c) !== "vencido").length;
+  const vencidos = rows.length - ativos;
+  const janela = rows.filter(c => situacao(c) === "a-vencer");
+  const escopo = (filtro.q || filtro.setor || filtro.sit) ? "Visão filtrada" : "Carteira";
+  const vencTxt = vencidos === 1 ? "1 vencido na visão" : vencidos + " vencidos na visão";
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi"><div class="lbl">Valor global</div><div class="val">${brl(valor)}</div><div class="foot">${escopo}</div></div>
+    <div class="kpi"><div class="lbl">Pago</div><div class="val">${brl(pago)}</div><div class="foot">${valor? Math.round(pago/valor*100):0}% executado</div></div>
+    <div class="kpi"><div class="lbl">Saldo</div><div class="val">${brl(valor-pago)}</div><div class="foot">${rows.length} contratos na visão</div></div>
+    <div class="kpi"><div class="lbl">Ativos</div><div class="val">${ativos}</div><div class="foot">${vencTxt}</div></div>
+    <div class="kpi alert"><div class="lbl">Janela de ${JANELA} dias</div><div class="val">${janela.length}</div><div class="foot">${brl(janela.reduce((s,c)=>s+c.valor,0))} em valor global</div></div>`;
+}
+
+const NS = "http://www.w3.org/2000/svg";
+function el(t,a,p){
+  const e = document.createElementNS(NS, t);
+  for (const k in a) e.setAttribute(k, a[k]);
+  if (p) p.appendChild(e);
+  return e;
+}
+
+function renderSetor(){
+  const rows = lista();
+  const svg = document.getElementById("cset");
+  svg.replaceChildren();
+  const map = new Map();
+  rows.forEach(c => {
+    const g = map.get(c.setor) || {setor:c.setor, valor:0, pago:0, n:0};
+    g.valor += c.valor; g.pago += c.pago; g.n += 1;
+    map.set(c.setor, g);
+  });
+  const groups = [...map.values()].sort((a,b)=>b.valor-a.valor);
+  const H = Math.max(180, groups.length * 56 + 28);
+  const W = 640, L = 168, R = 16, T = 8, B = 22;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("width", W);
+  svg.setAttribute("height", H);
+  if (!groups.length){ el("text",{x:16,y:28},svg).textContent = "Nenhum contrato neste filtro."; return; }
+  const max = Math.max(...groups.map(g => g.valor)) * 1.05;
+  const iw = W - L - R;
+  const x = v => L + v / max * iw;
+  const rh = (H - T - B) / groups.length;
+  const bh = Math.min(18, rh * 0.42);
+  groups.forEach((g,i) => {
+    const cy = T + rh * i + rh / 2;
+    el("text",{x:L-10,y:cy-2,"text-anchor":"end",fill:"var(--ink)",style:"font-weight:600"},svg).textContent = g.setor;
+    el("text",{x:L-10,y:cy+12,"text-anchor":"end"},svg).textContent = g.n + (g.n>1?" contratos":" contrato");
+    el("rect",{x:L,y:cy-bh/2,width:Math.max(2,x(g.valor)-L),height:bh,rx:4,fill:"var(--surface-2)"},svg);
+    if (g.pago>0) el("rect",{x:L,y:cy-bh/2,width:Math.max(2,x(g.pago)-L),height:bh,rx:4,fill:`var(${cor(g.setor)})`},svg);
+    el("text",{x:L,y:cy+bh/2+14,class:"tick"},svg).textContent = short(g.pago)+" pago · "+short(g.valor)+" global";
+    const hit = el("rect",{x:0,y:T+rh*i,width:W,height:rh,fill:"transparent",style:"cursor:pointer"},svg);
+    hit.addEventListener("click", () => {
+      filtro.setor = filtro.setor === g.setor ? "" : g.setor;
+      document.getElementById("fset").value = filtro.setor;
+      render();
+    });
+  });
+}
+
+function renderGantt(){
+  const rows = ordenar(lista()).sort((a,b)=>parseISO(a.inicio)-parseISO(b.inicio));
+  const svg = document.getElementById("cgan");
+  svg.replaceChildren();
+  const n = rows.length;
+  const H = Math.max(180, n * 28 + 36);
+  const W = 560, L = 108, R = 12, T = 16, B = 20;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("width", W);
+  svg.setAttribute("height", H);
+  if (!n){ el("text",{x:12,y:28},svg).textContent = "Nenhum contrato neste filtro."; return; }
+  const min = Math.min(...rows.map(c => parseISO(c.inicio).getTime()));
+  const max = Math.max(...rows.map(c => parseISO(c.fim).getTime()), today.getTime()+dayMs);
+  const iw = W - L - R;
+  const x = t => L + (t - min) / (max - min) * iw;
+  const y0 = T, y1 = H - B;
+  el("line",{x1:x(today),x2:x(today),y1:y0,y2:y1,stroke:"var(--ink-3)","stroke-dasharray":"3 3"},svg);
+  el("text",{x:x(today)+4,y:12},svg).textContent = "hoje";
+  const janelaFim = today.getTime() + JANELA * dayMs;
+  el("rect",{x:x(today),y:y0,width:Math.max(0,x(Math.min(janelaFim,max))-x(today)),height:y1-y0,fill:"var(--warn-ink)","fill-opacity":"0.08"},svg);
+  const rh = (y1 - y0) / n;
+  rows.forEach((c,i) => {
+    const cy = y0 + rh * i + rh / 2;
+    const s = situacao(c);
+    const cor = s === "vencido" ? "var(--bad-ink)" : s === "a-vencer" ? "var(--warn-ink)" : "var(--ok-ink)";
+    el("text",{x:L-8,y:cy+4,"text-anchor":"end",style:"fill:var(--ink-2)"},svg).textContent = c.numero;
+    const x1 = x(parseISO(c.inicio)), x2 = x(parseISO(c.fim));
+    el("rect",{x:x1,y:cy-5,width:Math.max(3,x2-x1),height:10,rx:4,fill:cor},svg);
+    const hit = el("rect",{x:0,y:y0+rh*i,width:W,height:rh,fill:"transparent",style:"cursor:pointer"},svg);
+    hit.addEventListener("click", () => abrir(c.numero));
+  });
+}
+
+const COLS = [
+  ["numero","Contrato","l"],
+  ["fornecedor","Fornecedor","l"],
+  ["setor","Setor","l"],
+  ["inicio","Início",""],
+  ["fim","Fim",""],
+  ["pagamento","Pagamento",""],
+  ["valor","Valor",""],
+  ["pago","Pago",""],
+  ["saldo","Saldo",""],
+  ["situacao","Situação","l"]
+];
+
+function renderTabela(){
+  const rows = ordenar(lista());
+  const set = document.getElementById("count");
+  set.textContent = rows.length + (rows.length === 1 ? " contrato" : " contratos");
+  const head = COLS.map(([k,label,cls]) => {
+    const mark = ordem.key === k ? (ordem.dir > 0 ? " ↑" : " ↓") : "";
+    return `<th class="${cls}" data-k="${k}">${label}${mark}</th>`;
+  }).join("");
+  const body = rows.length ? rows.map(c => {
+    const pag = proximoPagamento(c);
+    const s = situacao(c);
+    return `<tr class="data" data-id="${esc(c.numero)}">
+      <td class="l">${esc(c.numero)}</td>
+      <td class="l">${esc(c.fornecedor)}</td>
+      <td class="l"><span class="orgdot"><i class="sw" style="background:var(${cor(c.setor)})"></i>${esc(c.setor)}</span></td>
+      <td>${fmt(parseISO(c.inicio))}</td>
+      <td>${fmt(parseISO(c.fim))}</td>
+      <td>${pag ? fmt(pag) : "—"}</td>
+      <td>${brl(c.valor)}</td>
+      <td>${brl(c.pago)}</td>
+      <td>${brl(saldo(c))}</td>
+      <td class="l"><span class="pill ${s}">${esc(rotuloSit(c))}</span></td>
+    </tr>`;
+  }).join("") : `<tr><td class="l empty" colspan="10">Nenhum contrato encontrado.</td></tr>`;
+  document.getElementById("tbl").innerHTML = `<thead><tr>${head}</tr></thead><tbody>${body}</tbody>`;
+}
+
+function linha(k,v){ return `<span>${esc(k)}</span><b>${esc(v)}</b>`; }
+function abrir(numero){
+  const c = CONTRATOS.find(x => x.numero === numero);
+  if (!c) return;
+  const pag = proximoPagamento(c);
+  document.getElementById("dnum").textContent = c.numero + " · " + c.modalidade;
+  document.getElementById("dforn").textContent = c.fornecedor;
+  document.getElementById("dobj").textContent = c.objeto;
+  document.getElementById("dbody").innerHTML = `
+    <div class="block"><h3>Dados identificadores</h3><div class="kv">
+      ${linha("Processo", c.processo)}
+      ${linha("Modalidade", c.modalidade)}
+      ${linha("Setor", c.setor)}
+    </div></div>
+    <div class="block"><h3>Vigência e prazos</h3><div class="kv">
+      ${linha("Assinatura", c.assinatura ? fmt(parseISO(c.assinatura)) : "—")}
+      ${linha("Início", fmt(parseISO(c.inicio)))}
+      ${linha("Fim", fmt(parseISO(c.fim)))}
+      ${linha("Situação", rotuloSit(c))}
+      ${linha("Regra", "Alerta de renovação aos " + JANELA + " dias do término")}
+      ${linha("Próx. pagamento", pag ? fmt(pag) + (c.diaPagamento ? " · dia "+c.diaPagamento : "") : (c.diaPagamento ? "Sem parcela futura" : "Não informado"))}
+    </div></div>
+    <div class="block"><h3>Classificação e vínculos</h3><div class="kv">
+      ${linha("Renovável", c.renovavel ? "Sim" : "Não")}
+      ${linha("Gestor", c.gestor || "—")}
+      ${linha("Fiscal", c.fiscal || "Não atribuído")}
+    </div></div>
+    <div class="block"><h3>Dotação orçamentária</h3><div class="kv">
+      ${linha("Valor global", brl(c.valor))}
+      ${linha("Pago", brl(c.pago))}
+      ${linha("Saldo", brl(saldo(c)))}
+      ${linha("Fonte", c.fonte)}
+      ${linha("Programa", c.programa)}
+      ${linha("ND", c.nd)}
+    </div></div>`;
+  document.getElementById("dlg").showModal();
+}
+
+let setoresKey = "";
+function preencherSetores(){
+  const setores = [...new Set(CONTRATOS.map(c => c.setor))].sort((a,b) => a.localeCompare(b, "pt-BR"));
+  const key = setores.join("|");
+  if (key === setoresKey) return;
+  setoresKey = key;
+  const sel = document.getElementById("fset");
+  const atual = filtro.setor;
+  sel.innerHTML = `<option value="">Todos os setores</option>` + setores.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
+  if (setores.includes(atual)) sel.value = atual;
+  else { filtro.setor = ""; sel.value = ""; }
+}
+
+function render(){
+  preencherSetores();
+  renderAlertas();
+  renderKpis();
+  renderSetor();
+  renderGantt();
+  renderTabela();
+}
+
+function mostrarAviso(data){
+  const aviso = document.getElementById("aviso");
+  const partes = [];
+  if (data.ilustrativo) partes.push("<b>Dados ilustrativos.</b> Para a base real, aponte raizArquivos em config.json para o servidor de arquivos e marque dadosIlustrativos como false.");
+  if (data.erros && data.erros.length) {
+    const lista = data.erros.map(e => esc((e.numero || "linha " + e.linha) + ": " + e.faltando.join(", "))).join("; ");
+    partes.push("<b>" + data.erros.length + " registro(s) fora do padrão</b> ficaram de fora. " + lista);
+  }
+  aviso.hidden = partes.length === 0;
+  aviso.innerHTML = partes.join(" ");
+}
+
+async function carregar(){
+  try {
+    const resposta = await fetch("/api/contratos");
+    if (!resposta.ok) throw new Error("HTTP " + resposta.status);
+    const data = await resposta.json();
+    CONTRATOS = data.contratos || [];
+    JANELA = data.regras.janelaRenovacaoDias;
+    LIMITE = data.regras.limiteExecucao;
+    document.querySelector(".eyebrow").textContent = data.orgao + " · Gestão de contratos";
+    document.getElementById("fonte").textContent = (data.ilustrativo ? "Base ilustrativa · " : "Base oficial · ") + data.registro;
+    document.getElementById("mods").innerHTML = (data.modulos || []).map(m =>
+      m.ativo ? `<a href="/" aria-current="page">${esc(m.nome)}</a>` : `<span class="soon">${esc(m.nome)}</span>`
+    ).join("");
+    mostrarAviso(data);
+    render();
+  } catch (erro) {
+    const aviso = document.getElementById("aviso");
+    aviso.hidden = false;
+    aviso.innerHTML = "<b>Sistema parado.</b> Execute iniciar.bat na pasta do projeto e abra o endereço mostrado no terminal.";
+    document.getElementById("fonte").textContent = "Sem conexão com a base";
+  }
+}
+
+document.getElementById("q").addEventListener("input", e => { filtro.q = e.target.value; render(); });
+document.getElementById("fset").addEventListener("change", e => { filtro.setor = e.target.value; render(); });
+document.getElementById("fsit").addEventListener("change", e => { filtro.sit = e.target.value; render(); });
+document.getElementById("tbl").addEventListener("click", e => {
+  const th = e.target.closest("th");
+  if (th){
+    const k = th.dataset.k;
+    ordem = ordem.key === k ? {key:k, dir:-ordem.dir} : {key:k, dir: k==="fornecedor"||k==="setor"||k==="numero" ? 1 : -1};
+    renderTabela();
+    return;
+  }
+  const tr = e.target.closest("tr.data");
+  if (tr) abrir(tr.dataset.id);
+});
+document.getElementById("alerts").addEventListener("click", e => {
+  const b = e.target.closest("[data-id]");
+  if (b) abrir(b.dataset.id);
+});
+document.getElementById("dx").addEventListener("click", () => document.getElementById("dlg").close());
+document.getElementById("dlg").addEventListener("click", e => { if (e.target.id === "dlg") e.currentTarget.close(); });
+
+carregar();
+</script>
+</body>
+</html>
