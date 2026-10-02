@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acesso · ATI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/web/paginas/login/login.css" />
+</head>
+<body>
+  <form class="card" id="form" autocomplete="on">
+    <div class="marca">
+      <div class="selo">ATI</div>
+      <div>
+        <b>Agência de Tecnologia da Informação</b>
+        <span>Tocantins</span>
+      </div>
+    </div>
+    <h1>Acesso restrito</h1>
+    <p class="lead">Esta visão é reservada à presidência da ATI. Os contratos da carteira são dados sensíveis.</p>
+    <div class="erro" id="erro" hidden></div>
+    <label for="usuario">Usuário</label>
+    <input id="usuario" name="username" autocomplete="username" required />
+    <label for="senha">Senha</label>
+    <input id="senha" name="password" type="password" autocomplete="current-password" required />
+    <button type="submit" id="entrar">Entrar</button>
+    <p class="nota">Sessão de 8 horas neste computador.</p>
+  </form>
+<script type="module" src="/web/paginas/login/login.viewmodel.js"></script>
+</body>
+</html>

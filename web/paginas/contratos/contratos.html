@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contratos · ATI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/web/paginas/contratos/contratos.css">
+</head>
+<body>
+<aside class="side">
+  <div class="brand">
+    <div class="mark">ATI</div>
+    <p id="orgao">Agência de Tecnologia da Informação do Tocantins</p>
+  </div>
+  <nav aria-label="Módulos">
+    <a class="item" href="/"><span data-ico="home"></span>Dashboard</a>
+    <a class="item on" href="/contratos" aria-current="page"><span data-ico="file"></span>Contratos</a>
+    <span class="item off" title="Em breve"><span data-ico="receipt"></span>Notas fiscais</span>
+    <span class="item off" title="Em breve"><span data-ico="clipboard"></span>Ordens de serviço</span>
+    <span class="item off" title="Em breve"><span data-ico="bank"></span>Empenhos</span>
+  </nav>
+  <div class="user">
+    <div class="avatar" id="avatar">MV</div>
+    <div>
+    <b id="unome">Marcos Vinícius</b>
+    <span id="ucargo">Analista 3</span>
+    <button type="button" class="sair" id="sair">Sair</button>
+    </div>
+  </div>
+</aside>
+<div class="main">
+  <div class="top">
+    <label class="search">
+      <span data-ico="search"></span>
+      <input id="q" type="search" placeholder="Buscar contratos, fornecedores, números, etc..." aria-label="Buscar">
+    </label>
+    <button class="iconbtn" id="bell" type="button" aria-label="Alertas da carteira">
+      <span data-ico="bell"></span>
+      <span class="badge" id="badge" hidden>0</span>
+    </button>
+    <div class="datechip"><span data-ico="calendar"></span><span id="hoje"></span></div>
+  </div>
+  <div>
+    <h1>Contratos</h1>
+    <p class="sub" id="fonte">Carregando a base de contratos</p>
+  </div>
+  <div class="aviso" id="aviso" hidden></div>
+  <section class="kpis" id="kpis" aria-label="Indicadores"></section>
+  <section class="card" id="alertas">
+    <div class="head"><h2>Alertas da carteira</h2></div>
+    <div class="alerts" id="alerts"></div>
+  </section>
+  <div class="grid2">
+    <section class="card">
+      <div class="head">
+        <h2>Total por superintendência</h2>
+        <div class="legendbar"><span><i class="dot" style="background:#0c2340"></i>Pago</span><span><i class="dot" style="background:#eef2f6;box-shadow:inset 0 0 0 1px #e7edf4"></i>Saldo</span></div>
+      </div>
+      <svg class="chart" id="cset" role="img" aria-label="Valor pago e saldo por superintendência"></svg>
+    </section>
+    <section class="card">
+      <div class="head">
+        <h2>Vigência</h2>
+        <div class="legendbar" id="legenda-vigencia"><span><i class="dot" style="background:#16a34a"></i>Vigente</span><span><i class="dot" style="background:#d97706"></i>120 dias</span><span><i class="dot" style="background:#ef4444"></i>Vencido</span></div>
+      </div>
+      <svg class="chart" id="cgan" role="img" aria-label="Linha do tempo de vigência dos contratos"></svg>
+    </section>
+  </div>
+  <section class="card">
+    <div class="head">
+      <h2>Detalhamento</h2>
+      <span class="sub" id="count" style="margin:0"></span>
+    </div>
+    <div class="filters">
+      <select id="fsup" aria-label="Superintendência"></select>
+      <select id="fset" aria-label="Setor"></select>
+      <select id="fsit" aria-label="Situação">
+        <option value="">Todas as situações</option>
+        <option value="vigente">Vigente</option>
+        <option value="a-vencer">A vencer em 120 dias</option>
+        <option value="vencido">Vencido</option>
+      </select>
+    </div>
+    <div class="tablewrap"><table id="tbl"></table></div>
+  </section>
+</div>
+
+<dialog id="dlg">
+  <div class="sheet">
+    <header>
+      <div>
+        <div class="eyebrow" id="dnum"></div>
+        <h2 id="dforn"></h2>
+        <div class="sub" id="dobj"></div>
+      </div>
+      <button class="x" id="dx" type="button">Fechar</button>
+    </header>
+    <div class="blocks" id="dbody"></div>
+  </div>
+</dialog>
+<script type="module" src="/web/paginas/contratos/contratos.viewmodel.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard · ATI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/web/paginas/dashboard/dashboard.css">
+</head>
+<body>
+<aside class="side">
+  <div class="brand">
+    <div class="mark">ATI</div>
+    <p id="orgao">Agência de Tecnologia da Informação do Tocantins</p>
+  </div>
+  <nav aria-label="Módulos">
+    <a class="item on" href="/" aria-current="page"><span data-ico="home"></span>Dashboard</a>
+    <a class="item" href="/contratos"><span data-ico="file"></span>Contratos</a>
+    <span class="item off" title="Em breve"><span data-ico="receipt"></span>Notas fiscais</span>
+    <span class="item off" title="Em breve"><span data-ico="clipboard"></span>Ordens de serviço</span>
+    <span class="item off" title="Em breve"><span data-ico="bank"></span>Empenhos</span>
+  </nav>
+  <div class="user">
+    <div class="avatar" id="avatar">MV</div>
+    <div>
+    <b id="unome">Marcos Vinícius</b>
+    <span id="ucargo">Analista 3</span>
+    <button type="button" class="sair" id="sair">Sair</button>
+    </div>
+  </div>
+</aside>
+<div class="main">
+  <div class="top">
+    <label class="search">
+      <span data-ico="search"></span>
+      <input id="q" type="search" placeholder="Buscar contratos, fornecedores, números, etc..." aria-label="Buscar">
+    </label>
+    <button class="iconbtn" id="bell" type="button" aria-label="Alertas de vencimento">
+      <span data-ico="bell"></span>
+      <span class="badge" id="badge" hidden>0</span>
+    </button>
+    <div class="datechip"><span data-ico="calendar"></span><span id="hoje"></span></div>
+  </div>
+  <div class="hello">
+    <div>
+      <h1 id="ola">Olá</h1>
+      <p class="sub" id="resumo">Aqui está um resumo da situação dos contratos.</p>
+    </div>
+    <label class="periodo">
+      <span data-ico="calendar"></span>
+      <select id="periodo" aria-label="Período">
+        <option value="12m">Últimos 12 meses</option>
+        <option value="ano">Este ano</option>
+        <option value="tudo">Toda a carteira</option>
+      </select>
+    </label>
+  </div>
+  <div class="aviso" id="aviso" hidden></div>
+  <section class="kpis" id="kpis" aria-label="Indicadores"></section>
+  <section class="grid3">
+    <article class="card" id="status"></article>
+    <article class="card" id="setores"></article>
+    <article class="card" id="vencimentos"></article>
+  </section>
+  <section class="grid3">
+    <article class="card" id="valores"></article>
+    <article class="card" id="modalidades"></article>
+    <article class="card" id="financeiro"></article>
+  </section>
+  <section class="card" id="recentes"></section>
+</div>
+<script type="module" src="/web/paginas/dashboard/dashboard.viewmodel.js"></script>
+</body>
+</html>
