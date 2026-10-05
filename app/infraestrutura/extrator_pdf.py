@@ -179,7 +179,7 @@ def gravar(destino: Path, contrato: dict) -> None:
 
 def main() -> None:
     if len(sys.argv) != 2:
-        raise SystemExit("Uso: python extrair_contrato.py <termo.pdf>")
+        raise SystemExit("Uso: python -m app.infraestrutura.extrator_pdf <termo.pdf>")
     pdf = Path(sys.argv[1])
     if not pdf.is_file():
         raise SystemExit(f"Arquivo não encontrado: {pdf}")

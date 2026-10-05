@@ -178,7 +178,7 @@ export function mostrarAviso(data, quantidade) {
 export function mostrarFalha() {
   const aviso = document.getElementById("aviso");
   aviso.hidden = false;
-  aviso.innerHTML = "<b>Sistema parado.</b> Execute iniciar.bat na pasta do projeto e abra o endereço mostrado no terminal.";
+  aviso.innerHTML = "<b>Sistema parado.</b> Execute scripts\\iniciar.bat e abra o endereço mostrado no terminal.";
   document.getElementById("resumo").textContent = "Sem conexão com a base.";
 }
 
